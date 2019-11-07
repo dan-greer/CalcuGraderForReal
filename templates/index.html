@@ -3,7 +3,18 @@
 {% block content %}
 
     <h1>Welcome to CalcuGrader!</h1>
-    <a href="/login" class="btn btn-primary" role="button">Login</a>
-    <a href="/register" class="btn btn-primary" role="button">Register</a>
+
+    <div id=calculatedGrade>
+    </div>
+
+    <form id=inputs>
+        <label>Grade: </label>
+        <input type="text" name="grade"><br>
+    </form>
+    <button type="button" class="btn btn-primary" id="addClassBtn">Another Class?</button><br>
+    <button type="button" class="btn btn-primary" id="calculateBtn">Calculate</button>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='addEventListeners.js') }}"></script>
+
 
 {% endblock %}
