@@ -4,15 +4,34 @@
 
     <h1>Welcome to CalcuGrader!</h1>
 
-    <div id=calculatedGrade>
-    </div>
+    
 
     <form id=inputs>
         <label>Grade: </label>
-        <input type="text" name="grade"><br>
+        <input type="text" name="grade">
+		<label>Credits: </label>
+		<input type="text" name="credits"><br>
     </form>
     <button type="button" class="btn btn-primary" id="addClassBtn">Another Class?</button><br>
     <button type="button" class="btn btn-primary" id="calculateBtn">Calculate</button>
+
+	<div id=calculatedGrade>
+	</div>
+	
+
+	<br />
+	<p><h5>After calculating your GPA above with your current classes, enter the information below to see how it will affect your cummulative GPA.</h6></p>
+
+	<form>
+		<label>Previous Cummulative GPA: </label>
+		<input type="text" id="prev_gpa">
+		<label>Previous Total Attempted Credits: </label>
+		<input type="text" id="prev_total"><br>
+	</form>
+	<button type="button" class="btn btn-primary" id="calculateNewBtn">Calculate</button>
+
+	<div id=cummulative>
+	</div>
 
     <script type="text/javascript" src="{{ url_for('static', filename='addEventListeners.js') }}"></script>
 
