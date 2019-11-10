@@ -3,7 +3,7 @@ var grade_points = 0;
 var semester_gpa = 0;
 
 function addClass() {
-    $("#inputs").append("<label>Grade: </label><input type=\"text\" name=\"grade\"><label>Credits: </label><input type=\"text\" name=\"credits\"><br>");
+    $("#inputs").append("<label>Grade: </label><input type=\"text\" name=\"grade\" onblur=\"validate()\"><label>Credits: </label><input type=\"text\" name=\"credits\" onblur=\"validate()\"><br>");
     console.log("Adding class...");
 }
 
@@ -54,8 +54,20 @@ function calculate() {
 	console.log(grade_points);
 	console.log(semester_gpa);
 
-    $("#calculatedGrade").append("<p>GPA is " + semester_gpa.toPrecision(3) + "</p>");
+	$("#currentGPA").remove();
+    $("#calculatedGrade").append("<p id=\"currentGPA\">GPA is " + semester_gpa.toPrecision(3) + "</p>");
     console.log("Calculating...");
+}
+
+function clearCurrent() {
+	var grades = document.getElementsByName("grade");
+	for (let i = 0; i < grades.length; i++) {
+		document.getElementsByName("grade")[i].value = "";
+		document.getElementsByName("credits")[i].value = "";
+	}
+	$("#currentGPA").remove();
+	document.getElementById("calculateBtn").disabled = true;
+
 }
 
 function calculateGpa() {
@@ -70,6 +82,44 @@ function calculateGpa() {
 	console.log(total_points);
 	console.log(total);
 	var gpa = total_points / total;
-	$("#cummulative").append("<p>Cummulative GPA: " + gpa.toPrecision(3) + "</p>");
+	$("#totalGPA").remove();
+	$("#cummulative").append("<p id=\"totalGPA\">Cummulative GPA: " + gpa.toPrecision(3) + "</p>");
 	console.log("Calculating...");
+}
+
+function clearTotal() {
+	document.getElementById("prev_gpa").value = "";
+	document.getElementById("prev_total").value = "";
+	$("#totalGPA").remove();
+	document.getElementById("calculateNewBtn").disabled = true;
+
+}
+
+function validate() {
+	var grades = document.getElementsByName("grade");
+	let valid = true;
+	for (let i = 0; i < grades.length && valid == true; i++) {
+		if (document.getElementsByName("grade")[i].value == "" || document.getElementsByName("credits")[i].value == "") {
+			valid = false;
+		}
+	}
+
+	if (valid) {
+		document.getElementById("calculateBtn").disabled = false;
+	}
+}
+
+function validateTotalGPA() {
+	var prev_gpa = document.getElementById("prev_gpa").value;
+	var prev_total = document.getElementById("prev_total").value;
+	var current_gpa = document.getElementById("currentGPA");
+	let valid = true;
+
+	if (prev_gpa == "" || prev_total == "" || current_gpa == null) {
+		valid = false;
+	}
+
+	if (valid) {
+		document.getElementById("calculateNewBtn").disabled = false;
+	}
 }

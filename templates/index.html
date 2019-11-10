@@ -8,12 +8,13 @@
 
     <form id=inputs>
         <label>Grade: </label>
-        <input type="text" name="grade">
+        <input type="text" name="grade" onblur="validate()">
 		<label>Credits: </label>
-		<input type="text" name="credits"><br>
+		<input type="text" name="credits" onblur="validate()"><br>
     </form>
     <button type="button" class="btn btn-primary" id="addClassBtn">Another Class?</button><br>
-    <button type="button" class="btn btn-primary" id="calculateBtn">Calculate</button>
+	<button type="button" class="btn btn-primary" disabled="disabled" id="calculateBtn">Calculate</button>
+	<button type="button" class="btn btn-primary" id="clearCurrentBtn">Clear</button>
 
 	<div id=calculatedGrade>
 	</div>
@@ -24,11 +25,12 @@
 
 	<form>
 		<label>Previous Cummulative GPA: </label>
-		<input type="text" id="prev_gpa">
+		<input type="text" id="prev_gpa" onblur="validate()">
 		<label>Previous Total Attempted Credits: </label>
-		<input type="text" id="prev_total"><br>
+		<input type="text" id="prev_total" onblur="validateTotalGPA()"><br>
 	</form>
-	<button type="button" class="btn btn-primary" id="calculateNewBtn">Calculate</button>
+	<button type="button" class="btn btn-primary" disabled="disabled" id="calculateNewBtn">Calculate</button>
+	<button type="button" class="btn btn-primary" id="clearTotalBtn">Clear</button>
 
 	<div id=cummulative>
 	</div>
