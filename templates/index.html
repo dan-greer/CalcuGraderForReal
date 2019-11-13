@@ -8,17 +8,16 @@
 	<br />
 	<p><h5>Enter your letter grades and number of credit hours for all your current classes to calculate your GPA for the current semester. </h5>
 	
-	<h5>(<i>Grade format</i>: A, A-, B+, B, B-, C+, C, C-, D+, D, or E)</h8>
-	<br>
+	<h5>(<i>Valid letter grades:</i>: A, A-, B+, B, B-, C+, C, C-, D+, D, or E)</h5>
 	<br>
 
     <form id=inputs>
-        <label>Grade: </label>
+        <label>Letter Grade: </label>
         <input type="text" name="grade" onblur="validate()">
-		<label>Credits: </label>
-		<input type="text" name="credits" onblur="validate()"><br>
+		<label>Credit Hours: </label>
+		<input type="text" name="credits" onblur="validate()">
 	</form>
-	<br>
+
     <button type="button" class="btn btn-secondary" id="addClassBtn">Add Class</button><br><br>
 	<button type="button" class="btn btn-danger" disabled="disabled" id="calculateBtn">Calculate</button>&nbsp;
 	<button type="button" class="btn btn-dark" id="clearCurrentBtn">Clear</button>
@@ -29,17 +28,17 @@
 	
 
 	<br />
-	<p><h5>After calculating your current semester GPA above, enter the numbers below to see how it will affect your cumulative GPA.</h6></p>
+	<p><h5>After calculating your current semester GPA above, enter the numbers below to see how your grade this semester will affect your cumulative GPA.</h6></p>
 
 	<form>
 		<label>Previous Cumulative GPA: </label>
 		<input type="text" id="prev_gpa" onblur="validate()">
 		<br>
-		<label>Previous Total Attempted Credits: </label>
-		<input type="text" id="prev_total" onblur="validateTotalGPA()"><br>
+		<label>Previous Total Credit Hours: </label>
+		<input type="text" id="prev_total" onblur="validate()"><br>
 	</form>
 	<br>
-	<button type="button" class="btn btn-danger" disabled="disabled" id="calculateNewBtn">Calculate</button>
+	<button type="button" class="btn btn-danger" disabled="disabled" id="calculateNewBtn">Calculate</button>&nbsp;
 	<button type="button" class="btn btn-dark" id="clearTotalBtn">Clear</button>
 	<br>
 	<br>

@@ -5,10 +5,11 @@ var letter_grades = new Set(["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", 
 
 
 function addClass() {
-    $("#inputs").append("<label>Grade:&nbsp;</label><input type=\"text\" name=\"grade\" onblur=\"validate()\"><label>&nbsp;Credits:&nbsp;</label><input type=\"text\" name=\"credits\" onblur=\"validate()\"><br>");
+    $("#inputs").append("<br><label>Grade:&nbsp;</label><input type=\"text\" name=\"grade\" onblur=\"validate()\"><label>&nbsp;Credits:&nbsp;</label><input type=\"text\" name=\"credits\" onblur=\"validate()\">");
 	console.log("Adding class...");
 	document.getElementById("calculateBtn").disabled = true;
 	document.getElementById("calculatedGrade").value = "";
+	validate();
 }
 
 function gpa_points(grade) {
@@ -50,7 +51,7 @@ function calculate() {
 	while (i > 0) {
 		i = i-1;		
 		console.log(i);
-		total_credits += parseFloat(credit[i].value);
+		total_credits += parseInt(credit[i].value);
 		grade_points += credit[i].value * gpa_points(grades[i].value);
 	}
 	semester_gpa = grade_points / total_credits;
@@ -61,6 +62,7 @@ function calculate() {
 	$("#currentGPA").remove();
     $("#calculatedGrade").append("<p id=\"currentGPA\"><b>&nbsp;Current Semester GPA: " + semester_gpa.toPrecision(3) + "</b></p>");
     console.log("Calculating...");
+	validate();
 }
 
 function clearCurrent() {
@@ -70,7 +72,7 @@ function clearCurrent() {
 		document.getElementsByName("credits")[i].value = "";
 	}
 	$("#currentGPA").remove();
-	document.getElementById("calculateBtn").disabled = true;
+	validate();
 
 }
 
@@ -81,7 +83,7 @@ function calculateGpa() {
 	console.log(prev_total);
 	var total_points = (prev_total * prev_gpa) + grade_points;
 	console.log(grade_points);
-	var total = parseFloat(prev_total) + total_credits;
+	var total = parseInt(prev_total) + total_credits;
 	console.log(total_credits);
 	console.log(total_points);
 	console.log(total);
@@ -89,21 +91,22 @@ function calculateGpa() {
 	$("#totalGPA").remove();
 	$("#cummulative").append("<p id=\"totalGPA\"><b>&nbsp;Cumulative GPA: " + gpa.toPrecision(3) +"</b></p>");
 	console.log("Calculating...");
+	validate();
 }
 
 function clearTotal() {
 	document.getElementById("prev_gpa").value = "";
 	document.getElementById("prev_total").value = "";
 	$("#totalGPA").remove();
-	document.getElementById("calculateNewBtn").disabled = true;
+	validate();
 
 }
 
 function validate() {
 	var grades = document.getElementsByName("grade");
 	var credits = document.getElementsByName("credits");
-	let valid = true;
-	for (let i = 0; i < grades.length && valid == true; i++) {
+	let validC = true;
+	for (let i = 0; i < grades.length && validC == true; i++) {
 		console.log("i " + i + ", grades[i].value " + grades[i].value + ", credits[i].value " + credits[i].value);
 		console.log("is in set " + letter_grades.has(grades[i].value));
 		console.log("credits is NaN " + isNaN(Number(credits[i].value)));
@@ -111,28 +114,35 @@ function validate() {
 				|| credits[i].value == "" 
 				|| !letter_grades.has(grades[i].value)
 				|| isNaN(Number(credits[i].value))) {
-			valid = false;
+			validC = false;
 		}
 	}
 
-	if (valid) {
+	if (validC) {
 		document.getElementById("calculateBtn").disabled = false;
+	} else {
+		document.getElementById("calculateBtn").disabled = true;
+		$("#currentGPA").remove();
 	}
-}
 
-function validateTotalGPA() {
 	var prev_gpa = document.getElementById("prev_gpa").value;
 	var prev_total = document.getElementById("prev_total").value;
 	var current_gpa = document.getElementById("currentGPA");
-	let valid = true;
+	let validT = true;
 
+	console.log("current_gpa is NaN " + isNaN(Number(current_gpa)));
+	console.log("current_gpa is " + current_gpa);
+	console.log("prev_total is NaN " + isNaN(Number(prev_total)));
 	if (prev_gpa == "" || prev_total == "" 
-		|| current_gpa == null || isNaN(Number(current_gpa))
-		|| isNaN(Number(prev_total))) {
-		valid = false;
+		|| current_gpa == null || isNaN(Number(semester_gpa))
+		|| isNaN(Number(prev_total))
+		|| isNaN(Number(prev_gpa))) {
+		validT = false;
 	}
 
-	if (valid) {
+	if (validT && validC) {
 		document.getElementById("calculateNewBtn").disabled = false;
+	} else {
+		document.getElementById("calculateNewBtn").disabled = true;
 	}
 }
