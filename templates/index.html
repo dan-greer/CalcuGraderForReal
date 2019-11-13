@@ -2,40 +2,52 @@
 
 {% block content %}
 
-    <h1>Welcome to CalcuGrader!</h1>
-
-    
+<div style="padding:25px">
+	<h1>Welcome to CalcuGrader!</h1>
+	
+	<br />
+	<p><h5>Enter your letter grades and number of credit hours for all your current classes to calculate your GPA for the current semester. </h5>
+	
+	<h5>(<i>Grade format</i>: A, A-, B+, B, B-, C+, C, C-, D+, D, or E)</h8>
+	<br>
+	<br>
 
     <form id=inputs>
         <label>Grade: </label>
         <input type="text" name="grade" onblur="validate()">
 		<label>Credits: </label>
 		<input type="text" name="credits" onblur="validate()"><br>
-    </form>
-    <button type="button" class="btn btn-primary" id="addClassBtn">Another Class?</button><br>
-	<button type="button" class="btn btn-primary" disabled="disabled" id="calculateBtn">Calculate</button>
-	<button type="button" class="btn btn-primary" id="clearCurrentBtn">Clear</button>
-
-	<div id=calculatedGrade>
+	</form>
+	<br>
+    <button type="button" class="btn btn-secondary" id="addClassBtn">Add Class</button><br><br>
+	<button type="button" class="btn btn-danger" disabled="disabled" id="calculateBtn">Calculate</button>&nbsp;
+	<button type="button" class="btn btn-dark" id="clearCurrentBtn">Clear</button>
+	<br>
+	<br>
+	<div id=calculatedGrade class="border border-secondary">
 	</div>
 	
 
 	<br />
-	<p><h5>After calculating your GPA above with your current classes, enter the information below to see how it will affect your cummulative GPA.</h6></p>
+	<p><h5>After calculating your current semester GPA above, enter the numbers below to see how it will affect your cumulative GPA.</h6></p>
 
 	<form>
-		<label>Previous Cummulative GPA: </label>
+		<label>Previous Cumulative GPA: </label>
 		<input type="text" id="prev_gpa" onblur="validate()">
+		<br>
 		<label>Previous Total Attempted Credits: </label>
 		<input type="text" id="prev_total" onblur="validateTotalGPA()"><br>
 	</form>
-	<button type="button" class="btn btn-primary" disabled="disabled" id="calculateNewBtn">Calculate</button>
-	<button type="button" class="btn btn-primary" id="clearTotalBtn">Clear</button>
-
-	<div id=cummulative>
+	<br>
+	<button type="button" class="btn btn-danger" disabled="disabled" id="calculateNewBtn">Calculate</button>
+	<button type="button" class="btn btn-dark" id="clearTotalBtn">Clear</button>
+	<br>
+	<br>
+	<div id=cummulative class="border border-secondary">
 	</div>
 
     <script type="text/javascript" src="{{ url_for('static', filename='addEventListeners.js') }}"></script>
 
+</div>
 
 {% endblock %}

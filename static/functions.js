@@ -1,14 +1,18 @@
 var total_credits = 0;
 var grade_points = 0;
 var semester_gpa = 0;
+var letter_grades = new Set(["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "E"]);
+
 
 function addClass() {
-    $("#inputs").append("<label>Grade: </label><input type=\"text\" name=\"grade\" onblur=\"validate()\"><label>Credits: </label><input type=\"text\" name=\"credits\" onblur=\"validate()\"><br>");
-    console.log("Adding class...");
+    $("#inputs").append("<label>Grade:&nbsp;</label><input type=\"text\" name=\"grade\" onblur=\"validate()\"><label>&nbsp;Credits:&nbsp;</label><input type=\"text\" name=\"credits\" onblur=\"validate()\"><br>");
+	console.log("Adding class...");
+	document.getElementById("calculateBtn").disabled = true;
+	document.getElementById("calculatedGrade").value = "";
 }
 
 function gpa_points(grade) {
-	if (grade == 'A') {
+	if (grade == "A") {
 		return 4.0;
 	} else if (grade == "A-") {
 		return 3.7;
@@ -46,7 +50,7 @@ function calculate() {
 	while (i > 0) {
 		i = i-1;		
 		console.log(i);
-		total_credits += parseInt(credit[i].value);
+		total_credits += parseFloat(credit[i].value);
 		grade_points += credit[i].value * gpa_points(grades[i].value);
 	}
 	semester_gpa = grade_points / total_credits;
@@ -55,7 +59,7 @@ function calculate() {
 	console.log(semester_gpa);
 
 	$("#currentGPA").remove();
-    $("#calculatedGrade").append("<p id=\"currentGPA\">GPA is " + semester_gpa.toPrecision(3) + "</p>");
+    $("#calculatedGrade").append("<p id=\"currentGPA\"><b>&nbsp;Current Semester GPA: " + semester_gpa.toPrecision(3) + "</b></p>");
     console.log("Calculating...");
 }
 
@@ -77,13 +81,13 @@ function calculateGpa() {
 	console.log(prev_total);
 	var total_points = (prev_total * prev_gpa) + grade_points;
 	console.log(grade_points);
-	var total = parseInt(prev_total) + total_credits;
+	var total = parseFloat(prev_total) + total_credits;
 	console.log(total_credits);
 	console.log(total_points);
 	console.log(total);
 	var gpa = total_points / total;
 	$("#totalGPA").remove();
-	$("#cummulative").append("<p id=\"totalGPA\">Cummulative GPA: " + gpa.toPrecision(3) + "</p>");
+	$("#cummulative").append("<p id=\"totalGPA\"><b>&nbsp;Cumulative GPA: " + gpa.toPrecision(3) +"</b></p>");
 	console.log("Calculating...");
 }
 
@@ -97,9 +101,16 @@ function clearTotal() {
 
 function validate() {
 	var grades = document.getElementsByName("grade");
+	var credits = document.getElementsByName("credits");
 	let valid = true;
 	for (let i = 0; i < grades.length && valid == true; i++) {
-		if (document.getElementsByName("grade")[i].value == "" || document.getElementsByName("credits")[i].value == "") {
+		console.log("i " + i + ", grades[i].value " + grades[i].value + ", credits[i].value " + credits[i].value);
+		console.log("is in set " + letter_grades.has(grades[i].value));
+		console.log("credits is NaN " + isNaN(Number(credits[i].value)));
+		if (grades[i].value == "" 
+				|| credits[i].value == "" 
+				|| !letter_grades.has(grades[i].value)
+				|| isNaN(Number(credits[i].value))) {
 			valid = false;
 		}
 	}
@@ -115,7 +126,9 @@ function validateTotalGPA() {
 	var current_gpa = document.getElementById("currentGPA");
 	let valid = true;
 
-	if (prev_gpa == "" || prev_total == "" || current_gpa == null) {
+	if (prev_gpa == "" || prev_total == "" 
+		|| current_gpa == null || isNaN(Number(current_gpa))
+		|| isNaN(Number(prev_total))) {
 		valid = false;
 	}
 
