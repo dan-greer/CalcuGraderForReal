@@ -5,7 +5,7 @@ var letter_grades = new Set(["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", 
 
 
 function addClass() {
-    $("#inputs").append("<br><label>Grade:&nbsp;</label><input type=\"text\" name=\"grade\" onblur=\"validate()\"><label>&nbsp;Credits:&nbsp;</label><input type=\"text\" name=\"credits\" onblur=\"validate()\">");
+    $("#inputs").append("<br><label>Letter Grade:&nbsp;</label><input type=\"text\" name=\"grade\" onblur=\"validate()\"><label>&nbsp;Credit Hours:&nbsp;</label><input type=\"text\" name=\"credits\" onblur=\"validate()\">");
 	console.log("Adding class...");
 	document.getElementById("calculateBtn").disabled = true;
 	document.getElementById("calculatedGrade").value = "";
@@ -60,7 +60,7 @@ function calculate() {
 	console.log(semester_gpa);
 
 	$("#currentGPA").remove();
-    $("#calculatedGrade").append("<p id=\"currentGPA\"><b>&nbsp;Current Semester GPA: " + semester_gpa.toPrecision(3) + "</b></p>");
+    $("#calculatedGrade").append("<p id=\"currentGPA\"><h5><b>&nbsp;Current Semester GPA: " + semester_gpa.toPrecision(3) + "</b></h5></p>");
     console.log("Calculating...");
 	validate();
 }
@@ -89,7 +89,7 @@ function calculateGpa() {
 	console.log(total);
 	var gpa = total_points / total;
 	$("#totalGPA").remove();
-	$("#cummulative").append("<p id=\"totalGPA\"><b>&nbsp;Cumulative GPA: " + gpa.toPrecision(3) +"</b></p>");
+	$("#cummulative").append("<p id=\"totalGPA\"><h5><b>&nbsp;Cumulative GPA: " + gpa.toPrecision(3) +"</b></h5></p>");
 	console.log("Calculating...");
 	validate();
 }
